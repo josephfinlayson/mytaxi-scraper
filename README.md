@@ -14,7 +14,7 @@ This tool extracts meta information from these PDF receipts for further analysis
 ### Extract data
 
 1. Make sure you have python3
-2. Install `pdfminer.six` (`pip3 install pdfminer.six`)
+2. install dependencies with pipenv `pipenv install`
 3. Prepare a directory that contains your pdf files
 4. `python3 write_json.py <<path/to/directory/with/trailing/slash/>>`
 5. You have a `metadata.json` file with the metadata for all your taxi rides
@@ -43,6 +43,6 @@ Copy the file `extract.py` into your python project, then:
 from extract import parse_bill
 
 metadata = parse_bill('path/to/my/bill.pdf')
-print(metadata) 
+print(metadata)
 
 ```

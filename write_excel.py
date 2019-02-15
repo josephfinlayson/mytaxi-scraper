@@ -20,10 +20,17 @@ def get_metas(path):
 
 def main(path):
     metas = get_metas(path)
-    data = [('myTaxi', meta['price'], meta['date'].isoformat()) for meta in metas]
+    data = [({'supplier': 'myTaxi',
+              'id': meta['id'],
+              'price': meta['price'],
+              'to': meta['to'],
+              'from': meta['from'],
+              'date': meta['date'].isoformat()}) for meta in metas]
     df = pds.DataFrame(data)
+    df = df.drop_duplicates(subset='id')
+    df = df.sort_values('date')
     excelWriter = pds.ExcelWriter('bills.xlsx')
-    df.to_excel(excelWriter, 'Sheet1')
+    df.to_excel(excelWriter, 'Sheet1', columns=['supplier', 'price', 'date'])
     excelWriter.save()
 
     total = sum(meta['price'] for meta in metas)

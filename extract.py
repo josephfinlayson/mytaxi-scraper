@@ -38,7 +38,7 @@ def parse_text(text):
     from_r = re.compile('^von: (.*)$')
     to_r = re.compile('^nach: (.*)$')
     date_r = re.compile('^(\d\d).(\d\d).(\d\d) (\d\d):(\d\d)$')
-    price_r = re.compile('^(\d+),(\d+) €$')
+    price_r = re.compile('^(\d+),(\d+) (€|$|£)$')
 
     meta_data = {}
     for i, split in enumerate(splits):
@@ -66,6 +66,7 @@ def parse_text(text):
         # price
         if price_r.match(split):
             m = price_r.search(split)
+
             price = float(m.group(1)) + float(m.group(2))/100
             if 'prices' in meta_data:
                 meta_data['prices'].append(price)
